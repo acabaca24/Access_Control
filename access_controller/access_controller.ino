@@ -1,4 +1,3 @@
-#include <arduino-timer.h>
 
 // ? ▼▼ DEFINIÇÃO DE CONSTANTES ▼▼
 #define porta_corredorPinIn 1, 17; // TODO INSERIR NUMERO DO PIN
