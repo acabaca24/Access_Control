@@ -116,25 +116,6 @@ void loop()
     porta_corredorStatus = true; // * RESETAR O ESTADO DA PORTA
   }
   //!----------------------------------------------------------------------------------------------------------
-  //    // ? OPEN CURRENCYING DOOR
-  //                // ? LIGHT DOWHN 'WAIT' LIGHT
-  //               // ? LIGHT UP 'FORWARD' LIGHT
-  //   if (isPersonSai(sonar_amoedacaoPin) == 0 && sensor(sensorPin) == false)
-  //   {
-  //     digitalWrite(porta_amoedacaoPinOut, HIGH); // ? IF CONDITION CLOSE CURRENCYING DOOR
-  //     delay(10000);                              // ? WAIT FOR DOOR TO OPEN
-  //     digitalWrite(porta_amoedacaoPinOut, LOW);  // ? CLOSE CURRENCYING DOOR
-  //   }
-  // }
-  // else if (isPersonEnt(sonar_corredorPin) > 1 && sensor(sensorPin) == true)
-  // {
-  //   digitalWrite(sairPin, HIGH);              // ? LIGHT UP 'MOVE OUT' LIGHT
-  //   delay(10000);                             // ? WAIT FOR PEOPLE TO GET OUT
-  //   digitalWrite(porta_corredorPinOut, HIGH); // ? IF CONDITION CLOSE CORREDOR DOOR
-  // }
-  // else if (isPersonEnt(sonar_corredorPin) < 1 && sensor(sensorPin) == false)
-  // {
-  // }
 }
 
 int isPersonEnt(int sonarIn)
@@ -184,17 +165,3 @@ bool closeDoor(int contact, int count, int sensor)
     return false;
   }
 }
-
-// bool doorStatus(int door)
-// {
-//   if (digitalRead(door) == HIGH;)
-//   {
-//     // * DOOR CLOSE
-//     return true;
-//   }
-//   else
-//   {
-//     // * DOOR OPEN
-//     return false;
-//   }
-// }
