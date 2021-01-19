@@ -1,4 +1,5 @@
 
+
 // ? ▼▼ DEFINIÇÃO DE CONSTANTES ▼▼
 #define porta_corredorPinIn 1, 17; // TODO INSERIR NUMERO DO PIN
 #define porta_corredorPinOut 2;    // TODO INSERIR NUMERO DO PIN
@@ -46,15 +47,15 @@ void loop()
   //!------------------------------------▼▼ CICLO CORREDOR -> AMOEDAÇÃO ▼▼ ------------------------------------
   if (okPerson(okCorPin) == true)
   {
-    digitalWrite(porta_corredorPinOut, HIGH); // ? ABRIR PORTA DO CORREDOR
+    // ? SE A PESSOA FOR AUTORIZADA NO CORREDOR COMEÇA O CICLO
+    digitalWrite(porta_corredorPinOut, HIGH);
     porta_corredorStatus = false;
     if (closeDoor(porta_corredorPinIn, contador, sensorPin) == true)
-    // ? SE AO FIM DE 30 SEC. NINGUEM ENTRAR FECHA A PORTA
     {
+      // ? SE AO FIM DE 30 SEC. NINGUEM ENTRAR FECHA A PORTA
       digitalWrite(porta_corredorPinOut, LOW);
       porta_corredorStatus = true; // * RESETAR O ESTADO DA PORTA
     }
-    break;
   }
 
   if (isPersonEnt(sonar_corredorPin) == 1 && sensor(sensorPin) == true)
@@ -70,6 +71,15 @@ void loop()
     digitalWrite(aguardePin, LOW);
     digitalWrite(avancarPin, HIGH);
   }
+  else if (isPersonEnt(sonar_corredorPin) > 1 && sensor(sensorPin) == true)
+  {
+    // ? SE ENTRAR MAIS QUE UMA PESSOA, MANDA AS PESSOAS SAIR E FECHA A PORTA DE ENTRADA
+    digitalWrite(sairPin, HIGH);
+    delay(3000);
+    digitalWrite(sairPin, LOW);
+    digitalWrite(porta_corredorPinOut, LOW);
+    porta_corredorStatus = true; // * RESETAR O ESTADO DA PORTA
+  }
 
   if (isPersonSai(sonar_amoedacaoPin) == 0 && sensor(sensorPin) == false)
   {
@@ -83,11 +93,12 @@ void loop()
   //!------------------------------------▼▼ CICLO AMOEDAÇAO -> CORREDOR ▼▼ ------------------------------------
   if (okPerson(okAmoPin) == true)
   {
-    digitalWrite(porta_amoedacaoPinOut, HIGH); // ? ABRIR PORTA DA AMOEDAÇÃO
+    // ? SE A PESSOA FOR AUTORIZADA NA AMOEDAÇAO COMEÇA O CICLO
+    digitalWrite(porta_amoedacaoPinOut, HIGH);
     porta_amoedacaoStatus = false;
     if (closeDoor(porta_amoedacaoPinIn, contador, sensorPin) == true)
-    // ? SE AO FIM DE 30 SEC. NINGUEM ENTRAR FECHA A PORTA
     {
+      // ? SE AO FIM DE 30 SEC. NINGUEM ENTRAR FECHA A PORTA
       digitalWrite(porta_amoedacaoPinOut, LOW);
       porta_amoedacaoStatus = true; // * RESETAR O ESTADO DA PORTA
     }
@@ -105,6 +116,15 @@ void loop()
     porta_corredorStatus = false; // * MUDAR O ESTADO DA PORTA
     digitalWrite(aguardePin, LOW);
     digitalWrite(avancarPin, HIGH);
+  }
+  else if (isPersonEnt(sonar_amoedacaoPin) > 1 && sensor(sensorPin) == true)
+  {
+    // ? SE ENTRAR MAIS QUE UMA PESSOA, MANDA AS PESSOAS SAIR E FECHA A PORTA DE ENTRADA
+    digitalWrite(sairPin, HIGH);
+    delay(3000);
+    digitalWrite(sairPin, LOW);
+    digitalWrite(porta_amoedacaoPinOut, LOW);
+    porta_amoedacaoStatus = true; // * RESETAR O ESTADO DA PORTA
   }
 
   if (isPersonSai(sonar_corredorPin) == 0 && sensor(sensorPin) == false)
@@ -139,7 +159,7 @@ bool okPerson(int ok)
   }
 }
 
-bool sensor(int sensorPin)
+bool sensor(int sensor)
 {
   if (digitalRead(sensorPin) == HIGH)
   {
