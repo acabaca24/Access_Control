@@ -1,23 +1,23 @@
 
 
 // ? ▼▼ DEFINIÇÃO DE CONSTANTES ▼▼
-#define porta_corredorPinIn 1, 17; // TODO INSERIR NUMERO DO PIN
-#define porta_corredorPinOut 2;    // TODO INSERIR NUMERO DO PIN
-#define porta_amoedacaoPinIn 3;    // TODO INSERIR NUMERO DO PIN
-#define porta_amoedacaoPinOut 4;   // TODO INSERIR NUMERO DO PIN
-#define leitor_corredorPinIn 11;   // TODO INSERIR NUMERO DO PIN
-#define leitor_corredorPinOut 12;  // TODO INSERIR NUMERO DO PIN
-#define leitor_amoedacaoPinIn 13;  // TODO INSERIR NUMERO DO PIN
-#define leitor_amoedacaoPinOut 14; // TODO INSERIR NUMERO DO PIN
-#define sonar_corredorPin 5;       // TODO INSERIR NUMERO DO PIN
-#define sonar_amoedacaoPin 6;      // TODO INSERIR NUMERO DO PIN
-#define sensorPin 7;               // TODO INSERIR NUMERO DO PIN
-#define avancarPin 8;              // TODO INSERIR NUMERO DO PIN
-#define aguardePin 9;              // TODO INSERIR NUMERO DO PIN
-#define sairPin 10;                // TODO INSERIR NUMERO DO PIN
-#define okCorPin 15;               // TODO INSERIR NUMERO DO PIN
-#define okAmoPin 16;               // TODO INSERIR NUMERO DO PIN
-#define besouroPin 20;             // TODO INSERIR NUMERO DO PIN
+#define porta_corredorPinIn (1)     // TODO INSERIR NUMERO DO PIN
+#define porta_corredorPinOut (2)    // TODO INSERIR NUMERO DO PIN
+#define porta_amoedacaoPinIn (3)    // TODO INSERIR NUMERO DO PIN
+#define porta_amoedacaoPinOut (4)   // TODO INSERIR NUMERO DO PIN
+#define leitor_corredorPinIn (11)   // TODO INSERIR NUMERO DO PIN
+#define leitor_corredorPinOut (12)  // TODO INSERIR NUMERO DO PIN
+#define leitor_amoedacaoPinIn (13)  // TODO INSERIR NUMERO DO PIN
+#define leitor_amoedacaoPinOut (14) // TODO INSERIR NUMERO DO PIN
+#define sonar_corredorPin (5)       // TODO INSERIR NUMERO DO PIN
+#define sonar_amoedacaoPin (6)      // TODO INSERIR NUMERO DO PIN
+#define sensorPin (7)               // TODO INSERIR NUMERO DO PIN
+#define avancarPin (8)              // TODO INSERIR NUMERO DO PIN
+#define aguardePin (9)              // TODO INSERIR NUMERO DO PIN
+#define sairPin (10)                // TODO INSERIR NUMERO DO PIN
+#define okCorPin (15)               // TODO INSERIR NUMERO DO PIN
+#define okAmoPin (16)               // TODO INSERIR NUMERO DO PIN
+#define besouroPin (20)             // TODO INSERIR NUMERO DO PIN
 int contador;
 
 void setup()
@@ -51,7 +51,6 @@ void loop()
 {
   // ! put your main code here, to run repeatedly:
 
-  bool valid_card;
   static bool porta_corredorStatus = true;  // ? true ▶ fechada | false ▶ aberta
   static bool porta_amoedacaoStatus = true; // ? true ▶ fechada | false ▶ aberta
 
@@ -181,7 +180,7 @@ bool okPerson(int ok)
 
 bool sensor(int sensor)
 {
-  if (digitalRead(sensorPin) == HIGH)
+  if (digitalRead(sensor) == HIGH)
   {
     return true;
   }
@@ -195,7 +194,7 @@ bool closeDoor(int contact, int count, int sensor)
 // ? IF FUNTION RETURNS TRUE IT CLOSES THE DOOR, ELSE OPENS IT
 {
   delay(30000);
-  if (digitalRead(contact) == LOW && count == 0 && digitalRead(sensor) == LOW;)
+  if (digitalRead(contact) == LOW && count == 0 && digitalRead(sensor) == LOW)
   {
     return true;
   }
