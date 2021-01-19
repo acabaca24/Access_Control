@@ -17,6 +17,7 @@
 #define sairPin 10;                // TODO INSERIR NUMERO DO PIN
 #define okCorPin 15;               // TODO INSERIR NUMERO DO PIN
 #define okAmoPin 16;               // TODO INSERIR NUMERO DO PIN
+#define besouroPin 20;             // TODO INSERIR NUMERO DO PIN
 int contador;
 
 void setup()
@@ -27,13 +28,23 @@ void setup()
   // * ▼▼ DEFINIR PINS DE INPUT ▼▼
   pinMode(porta_corredorPinIn, INPUT);
   pinMode(porta_amoedacaoPinIn, INPUT);
+  pinMode(leitor_corredorPinIn, INPUT);
+  pinMode(leitor_amoedacaoPinIn, INPUT);
   pinMode(sonar_corredorPin, INPUT);
   pinMode(sonar_amoedacaoPin, INPUT);
   pinMode(sensorPin, INPUT);
+  pinMode(okCorPin, INPUT);
+  pinMode(okAmoPin, INPUT);
 
   // * ▼▼ DEFINIR PINS DE OUTPUT ▼▼
   pinMode(porta_corredorPinOut, OUTPUT);
   pinMode(porta_amoedacaoPinOut, OUTPUT);
+  pinMode(leitor_corredorPinOut, OUTPUT);
+  pinMode(leitor_amoedacaoPinOut, OUTPUT);
+  pinMode(avancarPin, OUTPUT);
+  pinMode(aguardePin, OUTPUT);
+  pinMode(sairPin, OUTPUT);
+  pinMode(besouroPin, OUTPUT);
 }
 
 void loop()
@@ -45,7 +56,7 @@ void loop()
   static bool porta_amoedacaoStatus = true; // ? true ▶ fechada | false ▶ aberta
 
   //!------------------------------------▼▼ CICLO CORREDOR -> AMOEDAÇÃO ▼▼ ------------------------------------
-  if (okPerson(okCorPin) == true)
+  if (okPerson(okCorPin) == true && doorStatus(porta_corredorPinIn) == true)
   {
     // ? SE A PESSOA FOR AUTORIZADA NO CORREDOR COMEÇA O CICLO
     digitalWrite(porta_corredorPinOut, HIGH);
@@ -56,6 +67,11 @@ void loop()
       digitalWrite(porta_corredorPinOut, LOW);
       porta_corredorStatus = true; // * RESETAR O ESTADO DA PORTA
     }
+  }
+  else if (okPerson(okCorPin) == false && doorStatus(porta_corredorPinIn) == false)
+  {
+    // ! FUCKING ALERT
+    digitalWrite(besouroPin, HIGH);
   }
 
   if (isPersonEnt(sonar_corredorPin) == 1 && sensor(sensorPin) == true)
@@ -91,7 +107,7 @@ void loop()
   //!----------------------------------------------------------------------------------------------------------
 
   //!------------------------------------▼▼ CICLO AMOEDAÇAO -> CORREDOR ▼▼ ------------------------------------
-  if (okPerson(okAmoPin) == true)
+  if (okPerson(okAmoPin) == true && doorStatus(porta_amoedacaoPinIn) == true)
   {
     // ? SE A PESSOA FOR AUTORIZADA NA AMOEDAÇAO COMEÇA O CICLO
     digitalWrite(porta_amoedacaoPinOut, HIGH);
@@ -102,6 +118,10 @@ void loop()
       digitalWrite(porta_amoedacaoPinOut, LOW);
       porta_amoedacaoStatus = true; // * RESETAR O ESTADO DA PORTA
     }
+  }else if (okPerson(okAmoPin) == false && doorStatus(porta_amoedacaoPinIn) == false)
+  {
+    // ! FUCKING ALERT
+    digitalWrite(besouroPin, HIGH);
   }
 
   if (isPersonEnt(sonar_amoedacaoPin) == 1 && sensor(sensorPin) == true)
@@ -182,5 +202,19 @@ bool closeDoor(int contact, int count, int sensor)
   else
   {
     return false;
+  }
+}
+
+bool doorStatus(int door)
+{
+  if (digitalRead(door) == LOW)
+  {
+    // ? IF LOW A PORTA ESTÁ ABERTA ▶ RETORNA FALSE
+    return false;
+  }
+  if (digitalRead(door) == HIGH)
+  {
+    // ? IF HIGH A PORTA ESTÁ FECHADA ▶ RETORNA TRUE
+    return true;
   }
 }
