@@ -53,7 +53,7 @@ void loop()
 
   static bool porta_corredorStatus = true;  // ? true ▶ fechada | false ▶ aberta
   static bool porta_amoedacaoStatus = true; // ? true ▶ fechada | false ▶ aberta
-  static int aberturaPorta;
+  static unsigned int aberturaPorta;
 
   //!------------------------------------ ▼▼ CICLO CORREDOR -> AMOEDAÇÃO ▼▼ ------------------------------------
   if (okPerson(okCorPin) && doorStatus(porta_corredorPinIn))
@@ -130,7 +130,7 @@ void loop()
     digitalWrite(aguardePin, LOW);
     digitalWrite(avancarPin, HIGH);
   }
-  else if (isPersonEnt(sonar_amoedacaoPin) > 1 && sensor(sensorPin))
+  else if (isPersonEnt(sonar_amoedacaoPin) > 1 && sensor(sensorPin)) //TODO: Fazer um loop enquanto a pessoa nao sair
   {
     // ? SE ENTRAR MAIS QUE UMA PESSOA, MANDA AS PESSOAS SAIR E FECHA A PORTA DE ENTRADA
     digitalWrite(sairPin, HIGH);
@@ -171,14 +171,7 @@ bool okPerson(int ok)
 
 bool sensor(int sensor)
 {
-  if (digitalRead(sensor) == HIGH)
-  {
-    return true;
-  }
-  else
-  {
-    return false;
-  }
+  return (digitalRead(sensor) == HIGH);
 }
 
 bool closeDoor(int contact, int count, int sensor)
@@ -189,14 +182,5 @@ bool closeDoor(int contact, int count, int sensor)
 
 bool doorStatus(int door)
 {
-  if (digitalRead(door) == LOW)
-  {
-    // ? IF LOW A PORTA ESTÁ ABERTA ▶ RETORNA FALSE
-    return false;
-  }
-  if (digitalRead(door) == HIGH)
-  {
-    // ? IF HIGH A PORTA ESTÁ FECHADA ▶ RETORNA TRUE
-    return true;
-  }
+  return (digitalRead(door) == HIGH)
 }
